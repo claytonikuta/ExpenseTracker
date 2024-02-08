@@ -1,5 +1,5 @@
+import React from 'react';
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-
 
 async function getTotalExpenses() {
   const res = await fetch("/api/expenses/total-amount");
@@ -11,6 +11,12 @@ async function getAllExpenses() {
   const res = await fetch("/api/expenses");
   const json = await res.json();
   return json;
+}
+
+async function deleteExpense(id) {
+  await fetch(`/api/expenses/${id}`, {
+    method: "DELETE",
+  });
 }
 
 type Expense = {
@@ -31,6 +37,10 @@ function App() {
     queryKey: ["all-expenses"],
     queryFn: getAllExpenses,
   });
+  async function handleDelete(id) {
+    await deleteExpense(id);
+    queryClient.invalidateQueries(); // Re-fetch all data after deletion
+  }
 
   async function createExpense(title: string, amount: number, date: string) {
     await fetch("/api/expenses", {
@@ -59,7 +69,7 @@ function App() {
           </div>
         ) : (
           <div className="text-center flex flex-col max-w-96 m-auto">
-            Total Spent ${totalExpenses.data.total.toFixed(2)}
+            Total Spent ${totalExpenses.data.total}
           </div>
         )}
       </div>
@@ -86,6 +96,9 @@ function App() {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
                     Amount
                   </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                    Delete
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-gray-800 divide-y divide-gray-200">
@@ -93,7 +106,15 @@ function App() {
                   <tr key={expense.id}>
                     <td className="px-6 py-4">{expense.title}</td>
                     <td className="px-6 py-4">{expense.date}</td>
-                    <td className="px-6 py-4">${expense.amount.toFixed(2)}</td>
+                    <td className="px-6 py-4">${expense.amount}</td>
+                    <td className="px-6 py-4">
+                      <button
+                        className="delete-button"
+                        onClick={() => handleDelete(expense.id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
