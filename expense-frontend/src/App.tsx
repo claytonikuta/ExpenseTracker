@@ -13,7 +13,7 @@ async function getAllExpenses() {
   return json;
 }
 
-async function deleteExpense(id) {
+async function deleteExpense(id: number) {
   await fetch(`/api/expenses/${id}`, {
     method: "DELETE",
   });
@@ -37,7 +37,7 @@ function App() {
     queryKey: ["all-expenses"],
     queryFn: getAllExpenses,
   });
-  async function handleDelete(id) {
+  async function handleDelete(id: number) {
     await deleteExpense(id);
     queryClient.invalidateQueries(); // Re-fetch all data after deletion
   }
