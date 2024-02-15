@@ -41,15 +41,3 @@
   color: #888;
 }
 
-/* Add this CSS to your stylesheet */
-.delete-button {
-  background-color: transparent;
-  border: none;
-  color: #ff5252; /* Red color for delete */
-  font-size: 1.2rem;
-  cursor: pointer;
-}
-
-.delete-button:hover {
-  color: #ff0000; /* Darker red color on hover */
-}
