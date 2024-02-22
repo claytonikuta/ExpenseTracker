@@ -27,6 +27,7 @@ function Login() {
   return (
     <div>
       <h1> You must Login</h1>
+      <a href="/api/login">Login</a>
     </div>
   );
 }

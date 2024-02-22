@@ -13,7 +13,8 @@ function Profile() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-center mb-4">Profile</h1>      <div className="mb-8">
+      <h1 className="text-3xl font-bold text-center mb-4">Profile</h1>      
+      <div className="mb-8">
         {currentUserQuery.error ? (
           <div className="text-red-500">{currentUserQuery.error.message}</div>
         ) : currentUserQuery.isPending ? (
@@ -30,6 +31,7 @@ function Profile() {
             </div>
           </div>
         )}
+        <a href="/api/logout">Logout</a>
       </div>
     </div>
   );
